@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import Logo from "./Logo";
+import NavBar from "./NavBar";
+import Search from "./Search";
+import Main from "./Main";
+import Box from "./Box";
+import WordContents from "./WordContents";
+import SavedWords from "./SavedWords";
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <NavBar>
+        <Logo />
+        <Search />
+      </NavBar>
+      <Main>
+        <Box>
+          <WordContents />
+        </Box>
+        <Box>
+          <SavedWords />
+        </Box>
+      </Main>
     </div>
   );
 }
-
-export default App;
