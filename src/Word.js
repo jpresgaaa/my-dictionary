@@ -4,10 +4,10 @@ export default function Word() {
       <p>Hello</p>
       <div className="buttons">
         <button>
-          <i class="bi bi-eye"></i>
+          <i className="bi bi-eye"></i>
         </button>
         <button className="delete">
-          <i class="bi bi-trash"></i>
+          <i className="bi bi-trash"></i>
         </button>
       </div>
     </li>

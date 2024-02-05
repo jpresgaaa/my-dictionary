@@ -121,10 +121,29 @@ body {
   padding: 25px;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background-color: var(--secondary-color-light);
   width: 500px;
   height: 700px;
   border-radius: 10px;
+}
+
+.main .box .initial {
+  color: var(--primary-color);
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.main .box .loading {
+  color: var(--primary-color);
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.main .box .error {
+  color: var(--danger-color);
+  font-size: 30px;
+  font-weight: 600;
 }
 
 .main .word {
@@ -213,6 +232,7 @@ body {
   padding: 10px 50px;
   cursor: pointer;
   border-radius: 10px;
+  margin-bottom: 20px;
 }
 
 .save-btn:hover {

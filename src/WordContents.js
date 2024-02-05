@@ -1,24 +1,21 @@
-export default function WordContents() {
+export default function WordContents({ searchedWord }) {
   return (
     <>
       <div className="word">
-        <h1>capitulate</h1>
+        <h1>{searchedWord.name}</h1>
       </div>
-      <div className="definition-box">
-        <div className="figure-of-speech">adjective</div>
+      <div className="definition-box list">
+        <div className="figure-of-speech">{searchedWord.figure}</div>
         <div className="definition">
           <h1>Definition</h1>
-          <p>
-            To surrender; to end all resistance, to give up; to go along with or
-            comply.
-          </p>
+          <p>{searchedWord.definition}</p>
         </div>
         <div className="synonym">
           <h1>Synonym</h1>
           <div className="synonym-paragraph">
-            <span>enliven</span>
-            <span>surrender</span>
-            <span>surrender</span>
+            {searchedWord.synonym1.map((syn) => (
+              <span key={syn}>{syn}</span>
+            ))}
           </div>
         </div>
         <button className="save-btn">Save</button>
