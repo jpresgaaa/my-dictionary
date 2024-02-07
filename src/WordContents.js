@@ -1,4 +1,4 @@
-export default function WordContents({ searchedWord }) {
+export default function WordContents({ searchedWord, onSave }) {
   return (
     <>
       <div className="word">
@@ -18,7 +18,9 @@ export default function WordContents({ searchedWord }) {
             ))}
           </div>
         </div>
-        <button className="save-btn">Save</button>
+        <button className="save-btn" onClick={onSave}>
+          Save
+        </button>
       </div>
     </>
   );

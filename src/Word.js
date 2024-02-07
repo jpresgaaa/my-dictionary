@@ -1,12 +1,12 @@
-export default function Word() {
+export default function Word({ word, onDelete, onViewWord }) {
   return (
     <li>
-      <p>Hello</p>
+      <p>{word.name}</p>
       <div className="buttons">
-        <button>
+        <button onClick={() => onViewWord(word.id)}>
           <i className="bi bi-eye"></i>
         </button>
-        <button className="delete">
+        <button className="delete" onClick={() => onDelete(word.id)}>
           <i className="bi bi-trash"></i>
         </button>
       </div>

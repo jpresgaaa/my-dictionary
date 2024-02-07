@@ -5,7 +5,7 @@ import Main from "./Main";
 import Box from "./Box";
 import WordContents from "./WordContents";
 import SavedWords from "./SavedWords";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const KEY = "2072fcf4-44c8-4743-88f9-b6e2ee5209ec";
 
@@ -14,6 +14,7 @@ export default function App() {
   const [searchedWord, setSearchedWord] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [wordList, setWordList] = useState([]);
 
   function handleSearch() {
     setIsLoading(true);
@@ -24,9 +25,6 @@ export default function App() {
         const res = await fetch(
           `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${query}?key=${KEY}`
         );
-
-        if (!res.ok)
-          throw new Error("Something went wrong with fetching the word");
 
         const data = await res.json();
 
@@ -50,12 +48,26 @@ export default function App() {
 
         setSearchedWord(desData);
       } catch (err) {
-        if (err.name !== "TypeError") setError(err.name);
+        if (err !== "TypeError") console.log(err.message);
       } finally {
         setIsLoading(false);
       }
     }
     getWord();
+  }
+
+  function handleSave() {
+    setWordList((wordList) => [...wordList, searchedWord]);
+  }
+
+  function handleDelete(id) {
+    setWordList((wordList) => wordList.filter((word) => word.id !== id));
+  }
+
+  function handleView(id) {
+    const [viewedData] = wordList.filter((word) => word.id === id);
+
+    setSearchedWord(viewedData);
   }
 
   // useEffect(
@@ -86,11 +98,19 @@ export default function App() {
           {error && <p className="error">{error}</p>}
           {isLoading && <p className="loading">Loading...</p>}
           {searchedWord && !error && (
-            <WordContents searchedWord={searchedWord} />
+            <WordContents
+              searchedWord={searchedWord}
+              onSave={handleSave}
+              key={searchedWord.id}
+            />
           )}
         </Box>
         <Box>
-          <SavedWords />
+          <SavedWords
+            wordList={wordList}
+            onDelete={handleDelete}
+            onViewWord={handleView}
+          />
         </Box>
       </Main>
     </div>
