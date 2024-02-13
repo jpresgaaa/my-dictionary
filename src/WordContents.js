@@ -1,4 +1,4 @@
-export default function WordContents({ searchedWord, onSave }) {
+export default function WordContents({ searchedWord, onSave, isAdded }) {
   return (
     <>
       <div className="word">
@@ -18,8 +18,8 @@ export default function WordContents({ searchedWord, onSave }) {
             ))}
           </div>
         </div>
-        <button className="save-btn" onClick={onSave}>
-          Save
+        <button className={`save-btn ${isAdded && "saved"}`} onClick={onSave}>
+          {isAdded ? "Saved" : "Save"}
         </button>
       </div>
     </>

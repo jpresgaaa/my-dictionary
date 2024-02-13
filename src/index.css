@@ -242,6 +242,11 @@ body {
   margin-bottom: 20px;
 }
 
+.save-btn.saved {
+  background-color: rgb(185, 185, 185);
+  pointer-events: none;
+}
+
 .save-btn:hover {
   background-color: #71b1b2;
 }

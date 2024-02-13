@@ -5,7 +5,7 @@ import Main from "./Main";
 import Box from "./Box";
 import WordContents from "./WordContents";
 import SavedWords from "./SavedWords";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const KEY = "2072fcf4-44c8-4743-88f9-b6e2ee5209ec";
 
@@ -14,7 +14,18 @@ export default function App() {
   const [searchedWord, setSearchedWord] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [wordList, setWordList] = useState([]);
+  const selectedId = searchedWord.id;
+
+  // const [wordList, setWordList] = useState([]);
+
+  const [wordList, setWordList] = useState(function () {
+    const storedValue = JSON.parse(localStorage.getItem("wordList"));
+    return storedValue;
+  });
+
+  const addedWords = wordList.map((word) => word.id);
+
+  const isAdded = addedWords.includes(selectedId);
 
   function handleSearch() {
     setIsLoading(true);
@@ -57,7 +68,9 @@ export default function App() {
   }
 
   function handleSave() {
-    setWordList((wordList) => [...wordList, searchedWord]);
+    if (!isAdded) {
+      setWordList((wordList) => [...wordList, searchedWord]);
+    }
   }
 
   function handleDelete(id) {
@@ -66,27 +79,29 @@ export default function App() {
 
   function handleView(id) {
     const [viewedData] = wordList.filter((word) => word.id === id);
-
     setSearchedWord(viewedData);
   }
 
-  // useEffect(
-  //   function () {
-  //     try {
-  //       async function getWord() {
-  //         const res = await fetch(
-  //           `https://www.dictionaryapi.com/api/v3/references/thesaurus/json/${word}?key=${KEY}`
-  //         );
-  //         const data = await res.json();
+  useEffect(function () {
+    function callback(e) {
+      if (e.code === "Enter") {
+        handleSearch();
+      }
+    }
+    document.addEventListener("keydown", callback);
 
-  //         console.log(data);
-  //       }
+    return function () {
+      document.removeEventListener("keydown", callback);
+    };
+  });
 
-  //       getWord();
-  //     } catch (error) {}
-  //   },
-  //   [word]
-  // );
+  useEffect(
+    function () {
+      localStorage.setItem("wordList", JSON.stringify(wordList));
+    },
+    [wordList]
+  );
+
   return (
     <div className="app">
       <NavBar>
@@ -102,6 +117,7 @@ export default function App() {
               searchedWord={searchedWord}
               onSave={handleSave}
               key={searchedWord.id}
+              isAdded={isAdded}
             />
           )}
         </Box>
